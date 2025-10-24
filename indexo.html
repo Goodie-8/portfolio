@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Goodluck Emmanuel | Web Developer Portfolio</title>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<style>
+:root{
+  --bg-dark:#071431;
+  --bg-mid:#08305a;
+  --card:rgba(255,255,255,0.04);
+  --accent:#4fd1ff;
+  --accent-2:#1d6fff;
+  --muted:#b8d5ea;
+  --text:#eaf6ff;
+  --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:Inter, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color:var(--text);
+  background:linear-gradient(120deg,var(--bg-dark),var(--bg-mid));
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-y:auto;
+}
+
+/* animated subtle background */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(600px 400px at 10% 20%, rgba(79,209,255,0.06), transparent 8%),
+    radial-gradient(500px 400px at 90% 80%, rgba(29,111,255,0.04), transparent 8%);
+  pointer-events:none;mix-blend-mode:overlay;animation: drift 20s ease-in-out infinite;
+}
+@keyframes drift{0%{transform:translateY(0)}50%{transform:translateY(-4%)}100%{transform:translateY(0)}}
+
+/* nav */
+nav{
+  position:sticky;top:0;z-index:60;
+  display:flex;align-items:center;justify-content:center;padding:12px 14px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px);
+}
+nav .nav-inner{width:100%;max-width:1100px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+nav .links{display:flex;gap:12px;align-items:center}
+nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:7px 10px;border-radius:8px}
+nav a:hover, nav a.active{color:var(--accent);background:rgba(79,209,255,0.04)}
+
+/* right controls */
+.controls{display:flex;align-items:center;gap:10px}
+.brand-tag{color:var(--muted);font-weight:700;margin-right:6px}
+
+/* theme toggle (thinking bulb) */
+.theme-toggle{background:transparent;border:0;padding:6px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.theme-toggle svg{width:20px;height:20px;display:block}
+
+/* hamburger */
+.hamburger{display:none;width:44px;height:38px;border-radius:8px;align-items:center;justify-content:center;cursor:pointer}
+.hamburger .lines{width:22px;height:3px;background:#fff;border-radius:2px;position:relative}
+.hamburger .lines::before,.hamburger .lines::after{content:"";position:absolute;left:0;width:22px;height:3px;background:#fff;border-radius:2px}
+.hamburger .lines::before{top:-7px}
+.hamburger .lines::after{top:7px}
+
+/* layout */
+.container{max-width:1100px;margin:36px auto;padding:0 18px;position:relative;z-index:10}
+.hero{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:center;margin-bottom:28px}
+.intro{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:26px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.45)}
+.tag{color:var(--accent-2);font-weight:700;margin-bottom:8px}
+h1{color:var(--accent);font-size:2.1rem;margin-bottom:6px}
+.lead{color:var(--muted);line-height:1.6;margin-bottom:14px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.btn{display:inline-block;padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#042038;font-weight:700;text-decoration:none}
+.btn.ghost{display:inline-block;padding:10px 16px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);font-weight:700;text-decoration:none}
+
+/* profile */
+.profile{background:var(--card);padding:18px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 12px 30px rgba(0,0,0,0.55)}
+.profile img{width:170px;height:170px;border-radius:50%;object-fit:cover;border:3px solid rgba(79,209,255,0.06)}
+.profile h3{color:var(--accent);font-size:1.05rem}
+.profile .meta{color:var(--muted);font-weight:600}
+
+section{padding:34px 0;border-top:1px solid rgba(255,255,255,0.02)}
+section h2{text-align:center;color:var(--accent);margin-bottom:18px;font-size:1.4rem}
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;max-width:900px;margin:12px auto}
+.skill{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;text-align:center;color:var(--muted);font-weight:700}
+
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:14px}
+.card{background:var(--card);padding:14px;border-radius:10px;cursor:pointer;transition:transform .25s ease, box-shadow .25s;box-shadow:0 10px 28px rgba(0,0,0,0.55)}
+.card:hover{transform:translateY(-10px);box-shadow:0 26px 60px rgba(0,60,120,0.08)}
+.card h3{color:var(--accent);margin-bottom:8px}
+.meta{color:var(--muted);font-weight:600}
+
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+.test{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:12px;border-radius:10px}
+.test p{color:#dff4ff;margin-bottom:10px;font-style:italic}
+.who{color:var(--accent);font-weight:700}
+
+.contact-grid{display:grid;grid-template-columns:1fr 360px;gap:14px;align-items:start;margin-top:10px}
+.contact-card{background:var(--card);padding:16px;border-radius:10px}
+.links a{color:var(--accent);text-decoration:none;display:inline-block;margin-bottom:6px}
+.note{color:var(--muted);margin-top:8px;font-size:0.95rem}
+
+.footer{padding:18px;text-align:center;color:#9fbfdc;margin-top:22px;border-top:1px solid rgba(255,255,255,0.02)}
+
+/* modal */
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(3,7,18,0.7);z-index:200;opacity:0;pointer-events:none;transition:opacity .18s}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-content{background:var(--card);padding:18px;border-radius:12px;max-width:860px;width:92%;box-shadow:0 30px 80px rgba(0,0,0,0.6)}
+.modal-content img{width:100%;border-radius:10px;margin-bottom:12px}
+.close{position:absolute;right:18px;top:14px;cursor:pointer;color:var(--accent)}
+
+/* hero slider (single slide - motion graphics-like) */
+.hero-slider{position:relative;border-radius:12px;overflow:hidden;margin-bottom:18px}
+.hero-slide{min-height:220px;display:flex;align-items:center;justify-content:center;color:#fff;padding:28px}
+/* simulated motion graphics using layered animated gradients */
+.motion-bg{position:absolute;inset:0;background:#000;z-index:0}
+.motion-layer{position:absolute;inset:0;opacity:0.55;mix-blend-mode:screen;animation:moveBG 12s linear infinite}
+.motion-layer.layer1{background:radial-gradient(circle at 10% 20%, rgba(79,209,255,0.6), transparent 12%)}
+.motion-layer.layer2{background:radial-gradient(circle at 85% 70%, rgba(29,111,255,0.45), transparent 14%);animation-duration:10s}
+.motion-layer.layer3{background:linear-gradient(120deg, rgba(255,255,255,0.06), transparent 30%);animation-duration:18s}
+@keyframes moveBG{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-6%, -4%, 0) scale(1.06)}100%{transform:translate3d(0,0,0) scale(1)}}
+
+.hero-slide .slide-content{position:relative;z-index:2;text-align:center;opacity:0;animation:fadeIn .9s ease .12s forwards}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* projects carousel placed above projects grid */
+.projects-carousel{position:relative;overflow:hidden;border-radius:10px;background:var(--card);padding:12px}
+.carousel-track{display:flex;transition:transform .6s ease}
+.carousel-slide{min-width:100%;padding:12px}
+.carousel-controls{display:flex;gap:8px;justify-content:center;margin-top:8px}
+.carousel-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.06);cursor:pointer}
+.carousel-dot.active{background:var(--accent)}
+
+/* responsive */
+@media(max-width:980px){.hero{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.profile img{width:140px;height:140px}}
+@media(max-width:860px){nav .links{display:none}.hamburger{display:flex} }
+@media(max-width:560px){nav{gap:8px;padding:8px}h1{font-size:1.7rem}}
+/* small animated touches */
+.fade-in { animation: fadeInUp .7s ease both; }
+@keyframes fadeInUp { from { opacity:0; transform: translateY(10px) } to { opacity:1; transform:none } }
+
+/* simple light theme override (toggle) */
+body.light{--bg-dark:#f6fbff;--bg-mid:#eaf6ff;--card:rgba(2,8,23,0.03);--accent:#0a4fff;--accent-2:#00aaff;--muted:#234;--text:#042038}
+
+/* small utility */
+.hidden{display:none}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="links" aria-label="Primary navigation">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+      <a href="https://github.com/Goodie-8" target="_blank" style="margin-left:8px;color:var(--muted);font-weight:700">GitHub</a>
+    </div>
+
+    <div class="controls">
+      <!-- top-right brand/tag -->
+      <div class="brand-tag" style="color:var(--muted);font-weight:700">&lt;/goodluck.dev&gt;</div>
+
+      <!-- theme toggle: thinking bulb icon -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme (thinking bulb)">
+        <!-- simple 'thinking bulb' SVG (bulb with a small 'thought bubble') -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M9 18h6v1a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1v-1z" fill="currentColor" opacity="0.85"/>
+          <path d="M12 2a5 5 0 0 0-3 9c0 1 .3 1.8.9 2.5L10 15h4l.1-1.5c.6-.7.9-1.5.9-2.5A5 5 0 0 0 12 2z" fill="currentColor" opacity="0.95"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" opacity="0.9"/>
+          <circle cx="19.2" cy="8.2" r="0.7" fill="currentColor" opacity="0.9"/>
+        </svg>
+      </button>
+
+      <!-- hamburger menu (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span class="lines"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- mobile off-canvas menu -->
+<div id="mobile-menu" class="modal" aria-hidden="true" style="z-index:90">
+  <div class="modal-content" role="dialog" aria-modal="true" style="max-width:320px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <strong style="color:var(--accent)">&lt;/goodluck.dev&gt;</strong>
+      <button id="mobile-close" style="background:transparent;border:0;color:var(--accent);font-weight:700;cursor:pointer">Close</button>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:10px">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+      <a href="https://github.com/Goodie-8" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</div>
+
+<main class="container" id="home">
+
+  <!-- Hero slider (single slide with motion-graphics-like background) -->
+  <div class="hero-slider fade-in" data-aos="fade-up">
+    <div class="hero-slide">
+      <div class="slide-content">
+    <img src="https://i.postimg.cc/sgV0tty9/1761307636518.jpg" alt="motion picture">
+      </div>
+    </div>
+  </div>
+
+  <div class="hero" data-aos="fade-up">
+    <div class="intro" data-aos="fade-right">
+      <div class="tag">Frontend Developer • UI Specialist</div>
+      <h1>Goodluck Emmanuel</h1>
+      <p class="lead">I design and build modern, responsive websites and interactive frontends — clean code, great UX, fast performance.</p>
+
+      <div class="cta">
+        <a class="btn" href="#projects">View Projects</a>
+        <a class="btn ghost" href="#contact">Contact</a>
+      </div>
+
+      <div style="margin-top:14px;color:var(--muted)">
+        <strong style="color:var(--accent)">Experience:</strong> <span style="font-weight:700">1 year</span>
+      </div>
+
+      <div style="margin-top:12px">
+        <small style="color:var(--muted)">Key tools:</small>
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+          <span style="background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:8px;color:var(--accent);font-weight:700">HTML</span>
+          <span style="background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:8px;color:var(--accent);font-weight:700">CSS</span>
+          <span style="background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:8px;color:var(--accent);font-weight:700">JS</span>
+          <span style="background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:8px;color:var(--accent);font-weight:700">React</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="profile" data-aos="fade-left">
+       <img src="https://i.postimg.cc/D01m7nFb/IMG-20251006-WA0266-2.jpg" alt="Profile Picture">
+      <h3>Goodluck Emmanuel</h3>
+      <div class="meta">Frontend Developer — 1 year experience</div>
+      <div style="margin-top:8px;color:var(--muted)">Based in Nigeria • Open for freelance & remote work</div>
+      <div style="margin-top:12px;display:flex;gap:10px">
+        <a class="btn" href="mailto:goodluckelisha21@gmail.com">Email</a>
+        <a class="btn ghost" href="https://wa.me/2348116631415" target="_blank">WhatsApp</a>
+      </div>
+    </aside>
+  </div>
+
+  <section id="about" data-aos="fade-up">
+    <h2>About Me</h2>
+    <div style="max-width:1000px;margin:10px auto;color:var(--muted);line-height:1.7" class="fade-in">
+      <p><strong>Goodluck Emmanuel</strong> — I’m a frontend-focused web developer with one year of hands-on experience crafting responsive, accessible, and performant websites. I specialize in turning UI concepts into maintainable, fast, and accessible code using HTML, modern CSS (Grid & Flex), JavaScript (ES6+), and React.</p>
+    </div>
+
+    <div class="skills-grid" data-aos="fade-up" data-aos-delay="80">
+      <div class="skill">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="HTML" width="40" height="40" style="filter:invert(6)"><br>
+        HTML <small style="display:block;font-weight:400">Accessible markup</small>
+      </div>
+      
+      <div class="skill">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="CSS" width="40" height="40" style="filter:invert(5)"><br>
+        CSS <small style="display:block;font-weight:400">Responsive & animations</small>
+      </div>
+
+      <div class="skill">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40" style="filter:invert(4)"><br>
+        JavaScript <small style="display:block;font-weight:400">ES6+</small>
+      </div>
+
+      <div class="skill">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="React" width="40" height="40" style="filter:invert(3)"><br>
+        React <small style="display:block;font-weight:400">SPA & components</small>
+      </div>
+
+      <div class="skill">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="GitHub" width="40" height="40" style="filter:invert(1)"><br>
+        Git <small style="display:block;font-weight:400">Version control</small>
+      </div>
+
+      <div class="skill">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/figma/figma-original.svg" alt="Design (UI/UX)" width="40" height="40" style="filter:invert(2)"><br>
+        Design <small style="display:block;font-weight:400">Figma & handoff</small>
+      </div>
+   
+    </div>
+  </section>
+  <section id="projects" data-aos="fade-up">
+    <h2>Projects</h2>
+
+    <!-- projects slider with two slides (left sliding) -->
+    <div class="projects-carousel" data-aos="fade-up" aria-roledescription="carousel">
+      <div class="carousel-track" id="projects-track">
+      
+        <div class="carousel-slide" data-id="elite">
+            <img arc="https://i.postimg.cc/QMRhpNgJ/Screenshot-20251024-183153.jpg" alt="Elitetraders.US">
+          <h3 style="color:var(--accent);margin-bottom:8px">Elitetrader.US</h3>
+          <p class="meta">Trading UI demo • charts & responsive dashboard</p>
+          <div style="margin-top:10px;color:var(--muted)">
+            <strong>About this project:</strong>
+            <p>A short crypto project demo that showcases responsive trading charts, real-time-like UI states, and a clean dashboard focused on clarity for traders. (Image placeholder left for injection.)</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" data-id="keeppush">
+         <img arc="https://i.postimg.cc/QMRhpNgJ/Screenshot-20251024-183153.jpg" alt="Student Assit"></img>
+          <h3 style="color:var(--accent);margin-bottom:8px">Student Assit</h3>
+          <p class="meta">Helping students grow and connect through advanced resources</p>
+          <div style="margin-top:10px;color:var(--muted)">
+            <strong>About this project:</strong>
+            <p>A student-centered platform aimed at improving learning outcomes via curated resources, progress tracking, and community features. (Image placeholder left for injection.)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-controls" aria-hidden="false">
+        <button class="carousel-dot active" data-index="0" aria-label="Show slide 1"></button>
+        <button class="carousel-dot" data-index="1" aria-label="Show slide 2"></button>
+      </div>
+    </div>
+
+    <div class="projects-grid">
+      <div class="card" data-id="elite-card">
+      
+        <h3> Elitetrader.US</h3>
+        <div class="meta">Trading UI demo • charts & responsive dashboard</div>
+      </div>
+      <div class="card" data-id="keeppush-card">
+        <h3> Student Assit</h3>
+        <div class="meta">Helping students grow and connect through advanced resources</div>
+      </div>
+    </div>
+  </section>
+  
+   <img src="https://i.postimg.cc/ZKkVqs2q/Screenshot-20251024-092123.jpg" alt="Testimonial Picture">
+  <section id="testimonials" data-aos="fade-up">
+    <h2>Testimonials</h2>
+    <div class="test-grid">
+      <div class="test" data-aos="fade-up">
+        <p>"Goodluck delivered a clean and modern UI quickly — very responsive and professional."</p>
+        <div class="who">— Client </div>
+      </div>
+      <div class="test" data-aos="fade-up" data-aos-delay="80">
+        <p>"Excellent communication and attention to detail. Highly recommended for frontend tasks."</p>
+        <div class="who">— Investors</div>
+      </div>
+      <div class="test" data-aos="fade-up" data-aos-delay="160">
+        <p>"Fast turnaround and a great sense for UI polish. Our product looked much better after the redesign."</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" data-aos="fade-up">
+    <h2>Contact Me</h2>
+
+    
+    <form id="contact-form" class="contact-card" action="https://formspree.io/f/xblzvvvv" method="POST" style="margin-top:12px">
+      <label style="display:block;margin-bottom:8px;color:var(--muted)">Full name
+        <input type="text" name="name" placeholder="Your name" style="width:100%;margin-top:6px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required>
+      </label>
+      <label style="display:block;margin-bottom:8px;color:var(--muted)">Email
+        <input type="email" name="email" placeholder="you@example.com" style="width:100%;margin-top:6px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required>
+      </label>
+      <label style="display:block;margin-bottom:8px;color:var(--muted)">Message
+        <textarea name="message" rows="5" placeholder="Your message" style="width:100%;margin-top:6px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required></textarea>
+      </label>
+      <button type="submit" class="btn" style="margin-top:8px">Send</button>
+    </form>
+
+    <div class="contact-card" style="margin-top:12px">
+      <p style="color:var(--muted)">Reach out via email, WhatsApp or Telegram. I respond quickly to client and freelance inquiries.</p>
+      <div class="links" style="margin-top:12px">
+        <a href="mailto:goodluckelisha21@gmail.com">goodluckelisha21@gmail.com</a><br>
+        <a href="https://wa.me/2348116631415" target="_blank">WhatsApp: +234 811 663 1415</a><br>
+        <a href="https://t.me/goodluckdev" target="_blank">Telegram</a><br>
+        <a href="https://github.com/Goodie-8" target="_blank">GitHub: Goodie-8</a>
+      </div>
+      <div class="note">Note: GitHub shown as <strong>Goodie-8</strong>. it's the official url of goodluck.dev</div>
+    </div>
+  </section>
+
+  <div class="footer"> © Goodluck Emmanuel</div>
+
+</main>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({once:true, duration:700});
+
+// Theme toggle logic (uses body.light)
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('click', ()=>{
+  document.body.classList.toggle('light');
+});
+
+// Mobile hamburger logic
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileClose = document.getElementById('mobile-close');
+function openMobile(){ mobileMenu.classList.add('open'); mobileMenu.style.opacity=1; mobileMenu.style.pointerEvents='auto'; mobileMenu.setAttribute('aria-hidden','false'); }
+function closeMobile(){ mobileMenu.classList.remove('open'); mobileMenu.style.opacity=0; mobileMenu.style.pointerEvents='none'; mobileMenu.setAttribute('aria-hidden','true'); }
+hamburger.addEventListener('click', openMobile);
+mobileClose.addEventListener('click', closeMobile);
+mobileMenu.addEventListener('click', (e)=>{ if(e.target===mobileMenu) closeMobile(); });
+
+// Projects carousel logic (two slides, slides left)
+const track = document.getElementById('projects-track');
+const dots = document.querySelectorAll('.carousel-dot');
+let current = 0;
+function goTo(index){
+  index = index % 2; if(index<0) index+=2;
+  current = index;
+  track.style.transform = `translateX(-${index*100}%)`;
+  dots.forEach(d=>d.classList.remove('active'));
+  dots[index].classList.add('active');
+}
+dots.forEach(d=>d.addEventListener('click', ()=> goTo(Number(d.dataset.index))));
+// auto-advance every 5s (wraps to left)
+let carouselInterval = setInterval(()=> goTo((current+1)%2), 5000);
+// pause on hover
+track.parentElement.addEventListener('mouseenter', ()=> clearInterval(carouselInterval));
+track.parentElement.addEventListener('mouseleave', ()=> carouselInterval = setInterval(()=> goTo((current+1)%2), 5000));
+
+// Accessibility: close mobile menu with Escape
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMobile(); });
+</script>
+</body>
+</html>
